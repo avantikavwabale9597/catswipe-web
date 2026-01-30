@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CATSWIPE 🐾</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>🐱 CatSwipe</h1>
+    </header>
+
+    <main>
+      <div class="card-container">
+        <div class="cat-card" id="catCard">
+          <img id="catImage" />
+          <h2 id="breedName">Loading...</h2>
+        </div>
+      </div>
+      <div class="cat-fact" id="catFact">Loading cat facts ...</div>
+      <div class="actions">
+        <button id="dislike">❌</button>
+        <button id="like">❤️</button>
+      </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/swipe.js"></script>
+  </body>
+</html>
