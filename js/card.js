@@ -42,3 +42,31 @@ document.addEventListener("click", function (e) {
     location.reload();
   }
 });
+
+document.getElementById("searchInput").addEventListener("input", function () {
+  const value = this.value.toLowerCase();
+  const allCards = document.querySelectorAll(".cat-card");
+
+  allCards.forEach((card) => {
+    const text = card.innerText.toLowerCase();
+    card.style.display = text.includes(value) ? "block" : "none";
+  });
+});
+
+document.getElementById("sortSelect").addEventListener("change", function () {
+  const value = this.value;
+
+  if (value === "name") {
+    cards.sort((a, b) => a.breeds[0].name.localeCompare(b.breeds[0].name));
+  }
+
+  if (value === "life") {
+    cards.sort(
+      (a, b) =>
+        parseInt(a.breeds[0].life_span) - parseInt(b.breeds[0].life_span),
+    );
+  }
+
+  localStorage.setItem("catCards", JSON.stringify(cards));
+  location.reload();
+});
