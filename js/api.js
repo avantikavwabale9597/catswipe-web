@@ -25,7 +25,7 @@ async function loadCat() {
   } else {
     factBox.textContent = "💡 This cat keeps its secrets 😼";
   }
-  window.curentCat = cat;
+  window.currentCat = cat;
 }
 
 loadCat();

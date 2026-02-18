@@ -1,5 +1,5 @@
 document.getElementById("like").onclick = () => {
-  saveFavourie(window.currentCat);
+  saveFavourite(window.currentCat);
   animateSwipe("right");
 };
 
@@ -20,10 +20,14 @@ function animateSwipe(direction) {
   }, 300);
 }
 
-function saveFavourie(cat) {
+function saveFavourite(cat) {
+  if (!cat || !cat.id) return;
+
   let cards = JSON.parse(localStorage.getItem("catCards")) || [];
+
   if (!cards.find((c) => c.id === cat.id)) {
     cards.push(cat);
   }
+
   localStorage.setItem("catCards", JSON.stringify(cards));
 }
