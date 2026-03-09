@@ -15,7 +15,9 @@ cards.forEach((cat, index) => {
   card.innerHTML = `
   <div class="card-inner"> 
     <div class="card-front">
+    <div class="image-wrapper">
       <img src="${cat.url}" alt="${breed.name}" />
+    </div>
       <h3>${breed.name}</h3>
     </div>
     
@@ -23,7 +25,6 @@ cards.forEach((cat, index) => {
       <p>🌍 ${breed.origin}</p>
       <p>😺 ${breed.temperament}</p>
       <p>⏳ ${breed.life_span} years</p>
-      <p class="screenshot-note">📸 You can take a screenshot of this card</p>
       <button class="remove-btn" data-index="${index}">❌ Remove</button>
       </div>
     </div>
