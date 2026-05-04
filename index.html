@@ -12,7 +12,7 @@
   <body>
     <nav class="nav">
       <a href="index.html">CatTinder</a>
-      <a href="cards.html">🎴 Cat cards</a>
+      <a href="cards.html">🎴 Cat cards <span id="likeCount">0</span></a>
     </nav>
     <header>
       <h1>🐱 CatSwipe</h1>
@@ -31,6 +31,7 @@
       <div class="actions">
         <button id="dislike">❌</button>
         <button id="like">❤️</button>
+        <button onclick="undoSwipe()">↩️</button>
       </div>
     </main>
 

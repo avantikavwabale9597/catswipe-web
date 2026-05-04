@@ -1,5 +1,8 @@
+let lastCat = null;
+
 document.getElementById("like").onclick = () => {
   saveFavourite(window.currentCat);
+  updateLikeCount();
   animateSwipe("right");
 };
 
@@ -9,6 +12,9 @@ document.getElementById("dislike").onclick = () => {
 
 function animateSwipe(direction) {
   const card = document.getElementById("catCard");
+
+  lastCat = window.currentCat;
+
   card.style.transform =
     direction === "right"
       ? "translateX(400px) rotate(15deg)"
@@ -19,15 +25,28 @@ function animateSwipe(direction) {
     loadCat();
   }, 300);
 }
+function undoSwipe() {
+  if (!lastCat) return;
 
+  displayCat(lastCat);
+  lastCat = null;
+}
 function saveFavourite(cat) {
   if (!cat || !cat.id) return;
 
   let cards = JSON.parse(localStorage.getItem("catCards")) || [];
 
-  if (!cards.find((c) => c.id === cat.id)) {
-    cards.push(cat);
-  }
+  const exists = card.some((c) => c.id === cat.id);
 
-  localStorage.setItem("catCards", JSON.stringify(cards));
+  if (!exists) {
+    cards.push(cat);
+    localStorage.setItem("catCards", JSON.stringify(cards));
+  }
 }
+
+function updateLikeCount() {
+  const cards = JSON.parse(localStorage.getItem("catCards")) || [];
+  document.getElementById("likeCount").innerText = cards.length;
+}
+
+updateLikeCount();
