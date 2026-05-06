@@ -3,6 +3,9 @@ const API_KEY =
 
 const API_URL = "https://api.thecatapi.com/v1/images/search?has_breeds=1";
 
+let recommendationCats = [];
+let dailyCatData = null;
+
 function getTodayKey() {
   return new Date().toDateString();
 }
@@ -28,12 +31,14 @@ async function loadDailyCat() {
 
     displayDaily(cat);
   } catch (err) {
-    console.error("Daily cat error:", err);
+    console.error(err);
   }
 }
 
 function displayDaily(cat) {
   if (!cat) return;
+
+  dailyCatData = cat;
 
   const breed = cat.breeds && cat.breeds[0];
 
@@ -43,6 +48,18 @@ function displayDaily(cat) {
   document.getElementById("dailyFact").innerText = breed
     ? `Purrfect Fact 🐾: ${breed.temperament}`
     : "This mysterious cat has secrets 😼";
+
+  const container = document.querySelector(".daily-card");
+
+  let btn = document.getElementById("dailyLikeBtn");
+
+  if (!btn) {
+    btn = document.createElement("button");
+    btn.id = "dailyLikeBtn";
+    btn.className = "like-btn";
+    btn.innerText = "❤️ Add";
+    container.appendChild(btn);
+  }
 }
 
 async function loadRecommendations() {
@@ -57,8 +74,9 @@ async function loadRecommendations() {
     if (!container) return;
 
     container.innerHTML = "";
+    recommendationCats = data;
 
-    data.forEach((cat) => {
+    data.forEach((cat, index) => {
       const breed = cat.breeds && cat.breeds[0];
       if (!breed) return;
 
@@ -68,15 +86,66 @@ async function loadRecommendations() {
       card.innerHTML = `
         <img src="${cat.url}" />
         <h4>${breed.name}</h4>
-        <p>🌍 ${breed.origin}</p>
-        <p class="mini-fact">😺 ${breed.temperament}</p>
+        <p>${breed.origin}</p>
+        <button class="like-btn" data-index="${index}">❤️ Add</button>
       `;
 
       container.appendChild(card);
     });
   } catch (err) {
-    console.error("Recommendations error:", err);
+    console.error(err);
   }
 }
+
+document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("like-btn")) {
+    const index = e.target.dataset.index;
+
+    let cat;
+
+    if (index !== undefined) {
+      cat = recommendationCats[index];
+    } else {
+      cat = dailyCatData;
+    }
+
+    if (!cat) return;
+
+    saveFavourite(cat);
+    updateLikeCount();
+
+    e.target.innerText = "✅ Added";
+  }
+
+  if (e.target.id === "dailyLikeBtn") {
+    if (!dailyCatData) return;
+
+    saveFavourite(dailyCatData);
+    updateLikeCount();
+
+    e.target.innerText = "✅ Added";
+  }
+});
+
+function saveFavourite(cat) {
+  if (!cat || !cat.id) return;
+
+  let cards = JSON.parse(localStorage.getItem("catCards")) || [];
+
+  const exists = cards.some((c) => c.id === cat.id);
+
+  if (!exists) {
+    cards.push(cat);
+    localStorage.setItem("catCards", JSON.stringify(cards));
+  }
+}
+
+function updateLikeCount() {
+  const cards = JSON.parse(localStorage.getItem("catCards")) || [];
+  const el = document.getElementById("likeCount");
+  if (el) el.innerText = cards.length;
+}
+
+updateLikeCount();
 loadDailyCat();
 loadRecommendations();

@@ -13,38 +13,46 @@ body {
 header {
   padding: 1rem;
 }
+
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 15px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #ff8fb1;
+  font-weight: 600;
+}
+
 .card-container {
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
 
-.cat-profile {
-  max-width: 420px;
-  width: 100%;
-}
-.cards-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 30px;
-  padding: 30px;
-}
-
-.image-wrapper {
-  width: 100%;
-  aspect-ratio: 1/1;
-  background: #f5f5f5;
-  border-radius: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+.swipe-card {
+  width: 320px;
+  max-width: 90vw;
+  background: white;
+  border-radius: 20px;
+  padding: 15px;
+  box-shadow: 0 10px 25px rgba(255, 143, 177, 0.25);
+  transition: transform 0.3s ease;
 }
 
-.image-wrapper img {
-  max-width: 100%;
-  max-height: 100%;
+.swipe-card img {
+  width: 100%;
+  height: 260px;
   object-fit: contain;
+  background: #f5f5f5;
+  border-radius: 15px;
+}
+
+.swipe-card h2 {
+  margin-top: 10px;
 }
 
 .actions {
@@ -80,42 +88,26 @@ header {
   box-shadow: 0 6px 15px rgba(160, 196, 255, 0.25);
 }
 
-.nav {
-  display: flex;
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 260px));
+  gap: 30px;
+  padding: 30px;
   justify-content: center;
-  gap: 20px;
-  padding: 15px;
-}
-
-.nav a {
-  text-decoration: none;
-  color: #ff8fb1;
-  font-weight: 600;
-}
-
-.cat-profile {
-  background: white;
-  border-radius: 20px;
-  padding: 15px;
-  box-shadow: 0 8px 20px rgba(255, 143, 177, 0.25);
-}
-
-.cat-profile img {
-  width: 100%;
-  border-radius: 15px;
 }
 
 .cat-card {
+  width: 260px;
+  height: 380px;
   perspective: 1000px;
-  height: 520px;
 }
 
 .card-inner {
   position: relative;
   width: 100%;
   height: 100%;
-  transform-style: preserve-3d;
   transition: transform 0.6s;
+  transform-style: preserve-3d;
 }
 
 .cat-card:hover .card-inner {
@@ -126,26 +118,46 @@ header {
 .card-back {
   position: absolute;
   width: 100%;
-  backface-visibility: hidden;
+  height: 100%;
   border-radius: 20px;
-  box-sizing: border-box;
+  backface-visibility: hidden;
+  background: white;
+  padding: 15px;
+  box-shadow: 0 8px 20px rgba(255, 143, 177, 0.25);
+}
+
+.card-front {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card-back {
   transform: rotateY(180deg);
-  background: white;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  gap: 10px;
+}
 
-  padding: 20px;
+.image-wrapper {
+  width: 100%;
+  height: 220px;
+  background: #f5f5f5;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
-.card-back p {
-  margin: 8px 0;
+
+.image-wrapper img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
+
 .controls {
   display: flex;
   justify-content: center;
@@ -187,15 +199,19 @@ header {
   border-color: #a0c4ff;
   box-shadow: 0 8px 20px rgba(160, 196, 255, 0.4);
 }
+
 #catImage {
   transition: opacity 0.3s ease;
 }
+
 .fade-out {
   opacity: 0;
 }
+
 .fade-in {
   opacity: 1;
 }
+
 .empty-state {
   grid-column: 1/-1;
   text-align: center;
@@ -243,7 +259,40 @@ header {
   margin-top: 8px;
   font-size: 0.9rem;
 }
+
 .mini-fact {
   font-size: 0.8rem;
   opacity: 0.8;
+}
+#recommendations {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+#recommendations .cat-profile {
+  background: white;
+  border-radius: 20px;
+  padding: 15px;
+  box-shadow: 0 8px 20px rgba(255, 143, 177, 0.25);
+  text-align: center;
+}
+
+#recommendations img {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  background: #f5f5f5;
+  border-radius: 15px;
+}
+
+#recommendations h4 {
+  margin: 10px 0 5px;
+}
+
+#recommendations p {
+  font-size: 0.85rem;
+  margin: 2px 0;
 }

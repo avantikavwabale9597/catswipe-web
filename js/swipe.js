@@ -36,11 +36,12 @@ function saveFavourite(cat) {
 
   let cards = JSON.parse(localStorage.getItem("catCards")) || [];
 
-  const exists = card.some((c) => c.id === cat.id);
+  const exists = cards.some((c) => c.id === cat.id);
 
   if (!exists) {
     cards.push(cat);
     localStorage.setItem("catCards", JSON.stringify(cards));
+    updateLikeCount();
   }
 }
 

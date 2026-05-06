@@ -27,24 +27,26 @@ function renderCards(data) {
     wrapper.className = "card-wrapper";
 
     wrapper.innerHTML = `
-      <div class="cat-card">
-        <div class="card-inner"> 
-          <div class="card-front">
-            <div class="image-wrapper">
-              <img src="${cat.url}" alt="${breed.name}" />
-            </div>
-            <h3>${breed.name}</h3>
-          </div>
+  <div class="cat-card">
+    <div class="card-inner">
 
-          <div class="card-back">
-            <p>🌍 ${breed.origin}</p>
-            <p>😺 ${breed.temperament}</p>
-            <p>⏳ ${breed.life_span} years</p>
-            <button class="remove-btn" data-name="${breed.name}">❌ Remove</button>
-          </div>
+      <div class="card-front">
+        <div class="image-wrapper">
+          <img src="${cat.url}" alt="${breed.name}" />
         </div>
+        <h3>${breed.name}</h3>
       </div>
-    `;
+
+      <div class="card-back">
+        <p>🌍 ${breed.origin}</p>
+        <p>😺 ${breed.temperament}</p>
+        <p>⏳ ${breed.life_span} years</p>
+        <button class="remove-btn" data-name="${breed.name}">❌ Remove</button>
+      </div>
+
+    </div>
+  </div>
+`;
 
     container.appendChild(wrapper);
   });

@@ -21,11 +21,9 @@
 
     <main>
       <div class="card-container">
-        <div class="cat-profile">
-          <div class="cat-card" id="catCard">
-            <img id="catImage" />
-            <h2 id="breedName">Loading...</h2>
-          </div>
+        <div class="swipe-card" id="catCard">
+          <img id="catImage" />
+          <h2 id="breedName">Loading...</h2>
         </div>
       </div>
       <div class="cat-fact" id="catFact">Loading cat facts ...</div>
@@ -38,5 +36,14 @@
 
     <script src="js/api.js"></script>
     <script src="js/swipe.js"></script>
+    <script>
+      function updateLikeCount() {
+        const cards = JSON.parse(localStorage.getItem("catCards")) || [];
+        const el = document.getElementById("likeCount");
+        if (el) el.innerText = cards.length;
+      }
+
+      updateLikeCount();
+    </script>
   </body>
 </html>
