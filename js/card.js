@@ -27,24 +27,18 @@ function renderCards(data) {
     wrapper.className = "card-wrapper";
 
     wrapper.innerHTML = `
-  <div class="cat-card">
-    <div class="card-inner">
+  <div class="cat-card" onclick='openModal(${JSON.stringify(cat)})'>
 
-      <div class="card-front">
-        <div class="image-wrapper">
-          <img src="${cat.url}" alt="${breed.name}" />
-        </div>
-        <h3>${breed.name}</h3>
+    <div class="card-front">
+      <div class="image-wrapper">
+        <img src="${cat.url}" alt="${breed.name}" />
       </div>
 
-      <div class="card-back">
-        <p>🌍 ${breed.origin}</p>
-        <p>😺 ${breed.temperament}</p>
-        <p>⏳ ${breed.life_span} years</p>
-        <button class="remove-btn" data-name="${breed.name}">❌ Remove</button>
-      </div>
+      <h3>${breed.name}</h3>
 
+      <p>🌍 ${breed.origin}</p>
     </div>
+
   </div>
 `;
 
@@ -61,7 +55,9 @@ document.addEventListener("click", function (e) {
     cards = cards.filter((c) => c.breeds[0].name !== name);
 
     localStorage.setItem("catCards", JSON.stringify(cards));
+
     renderCards(cards);
+    updateLikeCount();
   }
 });
 
@@ -70,6 +66,7 @@ document.getElementById("searchInput").addEventListener("input", function () {
 
   const filtered = cards.filter((cat) => {
     const breed = cat.breeds?.[0];
+
     if (!breed) return false;
 
     return (
@@ -97,12 +94,65 @@ document.getElementById("sortSelect").addEventListener("change", function () {
   }
 
   localStorage.setItem("catCards", JSON.stringify(cards));
+
   renderCards(cards);
 });
 
 function updateLikeCount() {
   const cards = JSON.parse(localStorage.getItem("catCards")) || [];
-  document.getElementById("likeCount").innerText = cards.length;
+
+  const count = document.getElementById("likeCount");
+
+  if (count) {
+    count.innerText = cards.length;
+  }
+}
+
+function openModal(cat) {
+  const breed = cat.breeds?.[0];
+
+  document.getElementById("modalContent").innerHTML = `
+    <button class="close-modal" onclick="closeModal()">✖</button>
+
+    <img src="${cat.url}" class="modal-img">
+
+    <div class="modal-body">
+      <h2>${breed?.name}</h2>
+
+      <p><strong>🌍 Origin:</strong> ${breed?.origin}</p>
+
+      <p><strong>😺 Temperament:</strong> ${breed?.temperament}</p>
+
+      <p><strong>⏳ Life Span:</strong> ${breed?.life_span} years</p>
+
+      <p><strong>🐾 Weight:</strong> ${
+        breed?.weight?.metric || "Unknown"
+      } kg</p>
+
+      <button 
+        class="remove-btn"
+        onclick="removeCat('${cat.id}')"
+      >
+        ❌ Remove From Cards
+      </button>
+    </div>
+  `;
+
+  document.getElementById("modal").classList.remove("hidden");
+}
+function removeCat(id) {
+  cards = cards.filter((cat) => cat.id !== id);
+
+  localStorage.setItem("catCards", JSON.stringify(cards));
+
+  renderCards(cards);
+
+  updateLikeCount();
+
+  closeModal();
+}
+function closeModal() {
+  document.getElementById("modal").classList.add("hidden");
 }
 
 updateLikeCount();

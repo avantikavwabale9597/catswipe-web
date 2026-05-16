@@ -5,19 +5,24 @@
     <title>Cat Cards 🎴</title>
     <link rel="stylesheet" href="css/style.css" />
   </head>
+
   <body>
     <nav class="nav">
+      <button class="theme-btn" onclick="toggleDark()">🌙</button>
+
       <a href="index.html">CatTinder</a>
-      <a href="cards.html">🎴 Cat Cards <span id="likeCount">0</span></a>
+      <a href="cards.html"> 🎴 Cat Cards <span id="likeCount">0</span> </a>
       <a href="daily.html">🌤️ Daily Cat</a>
+      <a href="match.html">❤️ Match Finder</a>
     </nav>
 
     <h2>🎴 Your Cat Cards</h2>
+
     <div class="controls">
       <input
         type="text"
         id="searchInput"
-        placeholder="Search by  breed or origin...."
+        placeholder="Search by breed or origin...."
       />
 
       <select id="sortSelect">
@@ -29,12 +34,21 @@
 
     <div class="cards-container" id="cardsContainer"></div>
 
+    <div id="modal" class="modal hidden">
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+
     <script src="js/card.js"></script>
+    <script src="js/theme.js"></script>
+
     <script>
       function updateLikeCount() {
         const cards = JSON.parse(localStorage.getItem("catCards")) || [];
         const el = document.getElementById("likeCount");
-        if (el) el.innerText = cards.length;
+
+        if (el) {
+          el.innerText = cards.length;
+        }
       }
 
       updateLikeCount();

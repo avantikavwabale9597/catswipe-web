@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Match Finder</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <nav class="nav">
+      <button class="theme-btn" onclick="toggleDark()">🌙</button>
+
+      <a href="index.html">CatTinder</a>
+      <a href="cards.html"> 🎴 Cat Cards <span id="likeCount">0</span> </a>
+      <a href="daily.html">🌤️ Daily Cat</a>
+      <a href="match.html">❤️ Match Finder</a>
+    </nav>
+
+    <section class="match-page">
+      <h1>Find Your Purr-fect Cat Match</h1>
+
+      <div class="quiz-card">
+        <div class="question-block">
+          <h3>1. Your Vibe?</h3>
+
+          <div class="options">
+            <button class="option-btn" data-type="calm">😌 Calm</button>
+            <button class="option-btn" data-type="energetic">
+              ⚡ Energetic
+            </button>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <h3>2. Favourite personality?</h3>
+
+          <div class="options">
+            <button class="option-btn" data-type="social">🫂 Social</button>
+
+            <button class="option-btn" data-type="independent">
+              🐾 Independent
+            </button>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <h3>3. Which lifestyle?</h3>
+
+          <div class="options">
+            <button class="option-btn" data-type="playful">🎾 Playful</button>
+
+            <button class="option-btn" data-type="lazy">💤 Lazy</button>
+          </div>
+        </div>
+        <button id="findMatchBtn">Find Match</button>
+      </div>
+
+      <div id="matchResult" class="match-result hidden">
+        <img id="matchImg" />
+
+        <h2 id="matchName"></h2>
+
+        <p id="matchPercent"></p>
+
+        <p id="matchFact"></p>
+
+        <button id="saveMatchBtn" class="like-btn">Save To Cards</button>
+      </div>
+    </section>
+
+    <script src="js/match.js"></script>
+    <script src="js/theme.js"></script>
+  </body>
+</html>

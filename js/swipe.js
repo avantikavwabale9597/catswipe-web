@@ -10,10 +10,12 @@ document.getElementById("dislike").onclick = () => {
   animateSwipe("left");
 };
 
+let swipeHistory = [];
+
 function animateSwipe(direction) {
   const card = document.getElementById("catCard");
 
-  lastCat = window.currentCat;
+  swipeHistory.push(window.currentCat);
 
   card.style.transform =
     direction === "right"
@@ -26,11 +28,16 @@ function animateSwipe(direction) {
   }, 300);
 }
 function undoSwipe() {
-  if (!lastCat) return;
+  if (swipeHistory.length === 0) return;
 
-  displayCat(lastCat);
-  lastCat = null;
+  const last = swipeHistory.pop();
+  displayCat(last);
+
+  const card = document.getElementById("catCard");
+  card.style.transform = "scale(0.9)";
+  setTimeout(() => (card.style.transform = "scale(1)"), 150);
 }
+
 function saveFavourite(cat) {
   if (!cat || !cat.id) return;
 
@@ -49,5 +56,11 @@ function updateLikeCount() {
   const cards = JSON.parse(localStorage.getItem("catCards")) || [];
   document.getElementById("likeCount").innerText = cards.length;
 }
+
+window.onload = () => {
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark");
+  }
+};
 
 updateLikeCount();

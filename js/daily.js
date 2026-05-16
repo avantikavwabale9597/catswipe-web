@@ -62,6 +62,47 @@ function displayDaily(cat) {
   }
 }
 
+function getPreferredTraits() {
+  const cards = JSON.parse(localStorage.getItem("catCards")) || [];
+
+  const origins = {};
+  const temperaments = {};
+
+  cards.forEach((cat) => {
+    const breed = cat.breeds?.[0];
+    if (!breed) return;
+
+    origins[breed.origin] = (origins[breed.origin] || 0) + 1;
+
+    breed.temperament.split(",").forEach((temp) => {
+      temp = temp.trim();
+
+      temperaments[temp] = (temperaments[temp] || 0) + 1;
+    });
+  });
+
+  return { origins, temperaments };
+}
+
+function getMatchScore(cat, prefs) {
+  const breed = cat.breeds?.[0];
+
+  if (!breed) return 0;
+
+  let score = 0;
+  if (prefs.origins[breed.origin]) {
+    score += 40;
+  }
+
+  breed.temperament.split(",").forEach((temp) => {
+    if (prefs.temperaments[temp.trim()]) {
+      score += 10;
+    }
+  });
+
+  return Math.min(score, 100);
+}
+
 async function loadRecommendations() {
   try {
     const res = await fetch(API_URL + "&limit=4", {
@@ -76,6 +117,8 @@ async function loadRecommendations() {
     container.innerHTML = "";
     recommendationCats = data;
 
+    const prefs = getPreferredTraits();
+
     data.forEach((cat, index) => {
       const breed = cat.breeds && cat.breeds[0];
       if (!breed) return;
@@ -88,6 +131,7 @@ async function loadRecommendations() {
         <h4>${breed.name}</h4>
         <p>${breed.origin}</p>
         <button class="like-btn" data-index="${index}">❤️ Add</button>
+        <p>🔥 Match: ${getMatchScore(cat, prefs)}%</p>
       `;
 
       container.appendChild(card);
