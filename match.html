@@ -73,7 +73,17 @@
       </div>
     </section>
 
+    <div id="toast" class="toast">❤️ Added to Cat Cards</div>
     <script src="js/match.js"></script>
     <script src="js/theme.js"></script>
+    <script>
+      function updateLikeCount() {
+        const cards = JSON.parse(localStorage.getItem("catCards")) || [];
+        const el = document.getElementById("likeCount");
+        if (el) el.innerText = cards.length;
+      }
+
+      updateLikeCount();
+    </script>
   </body>
 </html>
